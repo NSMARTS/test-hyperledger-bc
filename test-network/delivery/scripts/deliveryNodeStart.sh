@@ -1,0 +1,1 @@
+docker-compose -f ../compose/compose-delivery.yaml up -d

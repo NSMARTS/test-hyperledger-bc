@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"blockchain_network": {
+			"name": "test-blockchain-network",
+			"profile": "./connection-profile/blockchain_network.json"
+		}
+	},
+	"license": "Apache-2.0"
+}

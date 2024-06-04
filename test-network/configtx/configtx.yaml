@@ -1,0 +1,407 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+################################################################################
+#
+#   Section: Organizations
+#
+#   - This section defines the different organizational identities which will
+#   be referenced later in the configuration.
+#
+################################################################################
+Organizations:
+  - &Naver
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: NaverMSP
+    # ID to load the MSP definition as
+    ID: NaverMSP
+    MSPDir: ../organizations/peerOrganizations/naver.com/msp
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies: &NaverPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('NaverMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('NaverMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('NaverMSP.admin')"
+      Endorsement:
+        Type: Signature
+        # Rule: "OR('NaverMSP.peer')"
+        Rule: "AND('NaverMSP.peer')"
+        # Rule: "AND('NaverMSP.peer0','NaverMSP.peer1')"
+        # Type: ImplicitMeta
+        # Rule: "ALL Endorsement"
+    # leave this flag set to true.
+    OrdererEndpoints:
+      - orderer.naver.com:7050
+      - orderer2.naver.com:7050
+
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.naver.com
+        Port: 7051
+      - Host: peer1.naver.com
+        Port: 9051
+
+  - &Delivery
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: DeliveryMSP
+    # ID to load the MSP definition as
+    ID: DeliveryMSP
+    MSPDir: ../organizations/peerOrganizations/delivery.com/msp
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies: &DeliveryPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('DeliveryMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('DeliveryMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('DeliveryMSP.admin')"
+      Endorsement:
+        # Type: Signature
+        # Rule: "OR('DeliveryMSP.peer')"
+        # Rule: "AND('DeliveryMSP.peer0','DeliveryMSP.peer1')"
+        Type: Signature
+        Rule: "AND('DeliveryMSP.peer')"
+
+        # Type: ImplicitMeta
+        # Rule: "ALL Endorsement"
+    # leave this flag set to true.
+    OrdererEndpoints:
+      - orderer3.delivery.com:7050
+      - orderer4.delivery.com:7050
+
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.delivery.com
+        Port: 11051
+      - Host: peer1.delivery.com
+        Port: 13051
+
+  - &Restaurant
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: RestaurantMSP
+    # ID to load the MSP definition as
+    ID: RestaurantMSP
+    MSPDir: ../organizations/peerOrganizations/restaurant.com/msp
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies: &RestaurantPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('RestaurantMSP.member')"      
+      Writers:
+        Type: Signature
+        Rule: "OR('RestaurantMSP.member')"      
+      Admins:
+        Type: Signature
+        Rule: "OR('RestaurantMSP.admin')"
+      Endorsement:
+        # Type: Signature
+        # Rule: "OR('RestaurantMSP.peer')"
+        Type: Signature
+        Rule: "AND('RestaurantMSP.peer')"
+        # Rule: "AND('RestaurantMSP.peer0','RestaurantMSP.peer1')"
+        # Type: ImplicitMeta
+        # Rule: "ALL Endorsement"
+    # leave this flag set to true.
+    OrdererEndpoints:
+      - orderer5.restaurant.com:7050
+
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.restaurant.com
+        Port: 15051
+      - Host: peer1.restaurant.com
+        Port: 17051        
+        
+################################################################################
+#
+#   SECTION: Capabilities
+#
+#   - This section defines the capabilities of fabric network. This is a new
+#   concept as of v1.1.0 and should not be utilized in mixed networks with
+#   v1.0.x peers and orderers.  Capabilities define features which must be
+#   present in a fabric binary for that binary to safely participate in the
+#   fabric network.  For instance, if a new MSP type is added, newer binaries
+#   might recognize and validate the signatures from this type, while older
+#   binaries without this support would be unable to validate those
+#   transactions.  This could lead to different versions of the fabric binaries
+#   having different world states.  Instead, defining a capability for a channel
+#   informs those binaries without this capability that they must cease
+#   processing transactions until they have been upgraded.  For v1.0.x if any
+#   capabilities are defined (including a map with all capabilities turned off)
+#   then the v1.0.x peer will deliberately crash.
+#
+################################################################################
+Capabilities:
+  # Channel capabilities apply to both the orderers and the peers and must be
+  # supported by both.
+  # Set the value of the capability to true to require it.
+  Channel: &ChannelCapabilities
+    # V2_0 capability ensures that orderers and peers behave according
+    # to v2.0 channel capabilities. Orderers and peers from
+    # prior releases would behave in an incompatible way, and are therefore
+    # not able to participate in channels at v2.0 capability.
+    # Prior to enabling V2.0 channel capabilities, ensure that all
+    # orderers and peers on a channel are at v2.0.0 or later.
+    V2_0: true
+  # Orderer capabilities apply only to the orderers, and may be safely
+  # used with prior release peers.
+  # Set the value of the capability to true to require it.
+  Orderer: &OrdererCapabilities
+    # V2_0 orderer capability ensures that orderers behave according
+    # to v2.0 orderer capabilities. Orderers from
+    # prior releases would behave in an incompatible way, and are therefore
+    # not able to participate in channels at v2.0 orderer capability.
+    # Prior to enabling V2.0 orderer capabilities, ensure that all
+    # orderers on channel are at v2.0.0 or later.
+    V2_0: true
+  # Application capabilities apply only to the peer network, and may be safely
+  # used with prior release orderers.
+  # Set the value of the capability to true to require it.
+  Application: &ApplicationCapabilities
+    # V2.5 for Application enables the new non-backwards compatible
+    # features of fabric v2.5, namely the ability to purge private data.
+    # Prior to enabling V2.5 application capabilities, ensure that all
+    # peers on a channel are at v2.5.0 or later.
+    V2_0: true
+################################################################################
+#
+#   SECTION: Application
+#
+#   - This section defines the values to encode into a config transaction or
+#   genesis block for application related parameters
+#
+################################################################################
+Application: &ApplicationDefaults
+  # Organizations is the list of orgs which are defined as participants on
+  # the application side of the network
+  Organizations:
+  # Policies defines the set of policies at this level of the config tree
+  # For Application policies, their canonical path is
+  #   /Channel/Application/<PolicyName>
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: Signature
+      Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
+      # Type: ImplicitMeta
+      # Rule: "ALL Endorsement"
+  Capabilities:
+    <<: *ApplicationCapabilities
+################################################################################
+#
+#   SECTION: Orderer
+#
+#   - This section defines the values to encode into a config transaction or
+#   genesis block for orderer related parameters
+#
+################################################################################
+Orderer: &OrdererDefaults
+  OrdererType: etcdraft
+  EtcdRaft:
+      Consenters:
+      - Host: orderer.naver.com
+        Port: 7050
+        ClientTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer.naver.com/tls-msp/signcerts/cert.pem
+        ServerTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer.naver.com/tls-msp/signcerts/cert.pem
+      - Host: orderer2.naver.com
+        Port: 7050
+        ClientTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer2.naver.com/tls-msp/signcerts/cert.pem
+        ServerTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer2.naver.com/tls-msp/signcerts/cert.pem
+      - Host: orderer3.delivery.com
+        Port: 7050
+        ClientTLSCert: ../organizations/peerOrganizations/delivery.com/orderers/orderer3.delivery.com/tls-msp/signcerts/cert.pem
+        ServerTLSCert: ../organizations/peerOrganizations/delivery.com/orderers/orderer3.delivery.com/tls-msp/signcerts/cert.pem
+      - Host: orderer4.delivery.com
+        Port: 7050
+        ClientTLSCert: ../organizations/peerOrganizations/delivery.com/orderers/orderer4.delivery.com/tls-msp/signcerts/cert.pem
+        ServerTLSCert: ../organizations/peerOrganizations/delivery.com/orderers/orderer4.delivery.com/tls-msp/signcerts/cert.pem
+      - Host: orderer5.restaurant.com
+        Port: 7050
+        ClientTLSCert: ../organizations/peerOrganizations/restaurant.com/orderers/orderer5.restaurant.com/tls-msp/signcerts/cert.pem
+        ServerTLSCert: ../organizations/peerOrganizations/restaurant.com/orderers/orderer5.restaurant.com/tls-msp/signcerts/cert.pem
+  # Addresses used to be the list of orderer addresses that clients and peers
+  # could connect to.  However, this does not allow clients to associate orderer
+  # addresses and orderer organizations which can be useful for things such
+  # as TLS validation.  The preferred way to specify orderer addresses is now
+  # to include the OrdererEndpoints item in your org definition
+  # Addresses:
+  #   - orderer.ghrkservice.com:7050
+  #   - orderer2.ghrkservice.com:7050
+  #   - orderer3.ghrkservice.com:7050
+  #   - orderer4.ghrkservice.com:7050
+  #   - orderer5.ghrkservice.com:7050
+  # Batch Timeout: The amount of time to wait before creating a batch
+  BatchTimeout: 2s
+  # Batch Size: Controls the number of messages batched into a block
+  BatchSize:
+    # Max Message Count: The maximum number of messages to permit in a batch
+    MaxMessageCount: 10
+    # Absolute Max Bytes: The absolute maximum number of bytes allowed for
+    # the serialized messages in a batch.
+    AbsoluteMaxBytes: 99 MB
+    # Preferred Max Bytes: The preferred maximum number of bytes allowed for
+    # the serialized messages in a batch. A message larger than the preferred
+    # max bytes will result in a batch larger than preferred max bytes.
+    PreferredMaxBytes: 512 KB
+  # Organizations is the list of orgs which are defined as participants on
+  # the orderer side of the network
+  Organizations:
+  # Policies defines the set of policies at this level of the config tree
+  # For Orderer policies, their canonical path is
+  #   /Channel/Orderer/<PolicyName>
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    # BlockValidation specifies what signatures must be included in the block
+    # from the orderer for the peer to validate it.
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+################################################################################
+#
+#   CHANNEL
+#
+#   This section defines the values to encode into a config transaction or
+#   genesis block for channel related parameters.
+#
+################################################################################
+Channel: &ChannelDefaults
+  # Policies defines the set of policies at this level of the config tree
+  # For Channel policies, their canonical path is
+  #   /Channel/<PolicyName>
+  Policies:
+    # Who may invoke the 'Deliver' API
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    # Who may invoke the 'Broadcast' API
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    # By default, who may modify elements at this config level
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  # Capabilities describes the channel level capabilities, see the
+  # dedicated Capabilities section elsewhere in this file for a full
+  # description
+  Capabilities:
+    <<: *ChannelCapabilities
+################################################################################
+#
+#   Profile
+#
+#   - Different configuration profiles may be encoded here to be specified
+#   as parameters to the configtxgen tool
+#
+################################################################################
+Profiles:
+
+  OrgsOrdererGenesis:
+      <<: *ChannelDefaults
+      Orderer:
+          <<: *OrdererDefaults
+          Organizations:
+              - *Naver
+          Capabilities:
+              <<: *OrdererCapabilities
+      Consortiums:
+          SampleConsortium:
+              Organizations:
+                  - *Naver
+              
+  OrgsChannel:
+       Consortium: SampleConsortium
+       <<: *ChannelDefaults
+       Application:
+           <<: *ApplicationDefaults
+           Organizations:
+               - *Naver
+           Capabilities:
+               <<: *ApplicationCapabilities
+  
+  # 3개의 조직이 전부 참가한 채널 구성
+  ThreeOrgNetworkRaft:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      OrdererType: etcdraft
+      Organizations:
+        - *Naver
+        - *Delivery
+        - *Restaurant
+      Capabilities: 
+        <<: *OrdererCapabilities
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Naver
+        - *Delivery
+        - *Restaurant
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+# 2개의 조직이 전부 참가한 채널 구성
+# 네이버랑 레스토랑 둘만 계약한 계약서
+# 계약서 채널
+  TwoOrgNetworkRaft:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      OrdererType: etcdraft
+      Organizations:
+        - *Naver
+        - *Restaurant
+      Capabilities: 
+        <<: *OrdererCapabilities
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Naver
+        - *Restaurant
+      Capabilities:
+        <<: *ApplicationCapabilities

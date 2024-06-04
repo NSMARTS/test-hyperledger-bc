@@ -1,0 +1,1 @@
+docker-compose -f ../compose/compose-restaurant.yaml up -d

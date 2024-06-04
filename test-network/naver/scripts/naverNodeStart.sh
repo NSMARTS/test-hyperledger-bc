@@ -1,0 +1,1 @@
+docker-compose -f ../compose/compose-naver.yaml up -d

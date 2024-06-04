@@ -1,0 +1,2 @@
+docker kill peer0.naver.com couchdb0 peer1.naver.com couchdb1 peer2.naver.com orderer.naver.com orderer2.naver.com
+docker rm peer0.naver.com couchdb0 peer1.naver.com couchdb1 peer2.naver.com orderer.naver.com orderer2.naver.com -v

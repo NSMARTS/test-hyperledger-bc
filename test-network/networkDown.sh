@@ -14,17 +14,8 @@ docker network prune
 # 체인코드 이미지 삭제  
 docker rmi -f $(docker images -q --filter=reference='*dev-*') 
 
-# 삭제할 CA 파일 리스트
-RM_CA_FILES="msp ca-cert.pem fabric-ca-server.db IssuerPublicKey IssuerRevocationPublicKey tls-cert.pem"
+docker rm $(docker ps -a -q --filter "ancestor=hyperledger/fabric-nodeenv:2.5")
 
-# 종료된 컨테이너 삭제
-# 도커 안끄고 컴퓨터 종료했을때 사용
-# docker container prune
-
-
-# 환경변수 설정
-
-# 삭제할 CA 파일 리스트
 RM_CA_FILES="msp ca-cert.pem fabric-ca-server.db IssuerPublicKey IssuerRevocationPublicKey tls-cert.pem"
 
 # 삭제할 CRYPTO 파일 리스트
@@ -83,12 +74,3 @@ for file in $RM_CRYPTO_FILES; do
     rm -rf ./organizations/peerOrganizations/restaurant.com/$file
     rm -rf ./organizations/tls-ca/$file
 done
-
-# 개발 환경시
-sudo rm -rf ../../../server/utils/wallet
-sudo mkdir ../../../server/utils/wallet
-sudo chmod -R 777 ../../../server/utils/wallet 
-
-# aws 환경시
-# sudo rm -rf ../../../smart-service/utils/wallet
-# sudo mkdir ../../../smart-service/utils/wallet

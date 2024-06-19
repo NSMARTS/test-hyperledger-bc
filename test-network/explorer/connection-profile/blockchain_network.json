@@ -32,13 +32,21 @@
                 "peer0.restaurant.com": {},
                 "peer1.restaurant.com": {}
             }
+        },
+        "contractchannel": {
+            "peers": {
+                "peer0.naver.com": {},
+                "peer1.naver.com": {},
+                "peer0.restaurant.com": {},
+                "peer1.restaurant.com": {}
+            }
         }
     },
 	"organizations": {
 		"NaverMSP": {
 			"mspid": "NaverMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/naver.com/admin/msp/keystore/b4937ef9a916c49572553bfe9a8269a9a3d002397a624ee2ff69a7573b285ffd_sk"
+				"path": "/tmp/crypto/peerOrganizations/naver.com/admin/msp/keystore/5d7756222a1d78f5cd083b3c749a119a9d60fa572fce19f62276196b48b2f334_sk"
 			},
 			"peers": ["peer0.naver.com","peer1.naver.com"],
 			"signedCert": {
@@ -48,7 +56,7 @@
     "DeliveryMSP": {
 			"mspid": "DeliveryMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/delivery.com/admin/msp/keystore/5fd86a43dc80a909419e3e5cb3a339e0634e8a253fe7642b989c1ef521041b01_sk"
+				"path": "/tmp/crypto/peerOrganizations/delivery.com/admin/msp/keystore/900283fb810f809610e8715b6807a0be6dce75718ea0637f4d55a894476730b5_sk"
 			},
 			"peers": ["peer0.delivery.com","peer1.delivery.com"],
 			"signedCert": {
@@ -58,7 +66,7 @@
     "RestaurantMSP": {
 			"mspid": "RestaurantMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/restaurant.com/admin/msp/keystore/472bc83a2be5a92dfa9bd78cca9ad4b854ea0314d06372696e482410450b251a_sk"
+				"path": "/tmp/crypto/peerOrganizations/restaurant.com/admin/msp/keystore/26fbf0b4b54f273a00b083c82e2820dbfc4ee69b7471ec747112ac2be64da19f_sk"
 			},
 			"peers": ["peer0.restaurant.com","peer1.restaurant.com"],
 			"signedCert": {

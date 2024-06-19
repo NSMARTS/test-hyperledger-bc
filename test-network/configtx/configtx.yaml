@@ -218,10 +218,10 @@ Application: &ApplicationDefaults
       Type: ImplicitMeta
       Rule: "MAJORITY Endorsement"
     Endorsement:
-      Type: Signature
-      Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
-      # Type: ImplicitMeta
-      # Rule: "ALL Endorsement"
+      # Type: Signature
+      # Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
+      Type: ImplicitMeta
+      Rule: "ALL Endorsement"
   Capabilities:
     <<: *ApplicationCapabilities
 ################################################################################
@@ -393,6 +393,20 @@ Profiles:
     Orderer:
       <<: *OrdererDefaults
       OrdererType: etcdraft
+      EtcdRaft:
+          Consenters:
+          - Host: orderer.naver.com
+            Port: 7050
+            ClientTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer.naver.com/tls-msp/signcerts/cert.pem
+            ServerTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer.naver.com/tls-msp/signcerts/cert.pem
+          - Host: orderer2.naver.com
+            Port: 7050
+            ClientTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer2.naver.com/tls-msp/signcerts/cert.pem
+            ServerTLSCert: ../organizations/peerOrganizations/naver.com/orderers/orderer2.naver.com/tls-msp/signcerts/cert.pem
+          - Host: orderer5.restaurant.com
+            Port: 7050
+            ClientTLSCert: ../organizations/peerOrganizations/restaurant.com/orderers/orderer5.restaurant.com/tls-msp/signcerts/cert.pem
+            ServerTLSCert: ../organizations/peerOrganizations/restaurant.com/orderers/orderer5.restaurant.com/tls-msp/signcerts/cert.pem
       Organizations:
         - *Naver
         - *Restaurant

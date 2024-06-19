@@ -268,13 +268,13 @@ signing:
     default:
       usage:
         - digital signature
-      expiry: 8760h
+      expiry: 876000h
     profiles:
       ca:
          usage:
            - cert sign
            - crl sign
-         expiry: 43800h
+         expiry: 438000h
          caconstraint:
            isca: true
            maxpathlen: 0
@@ -285,7 +285,7 @@ signing:
             - server auth
             - client auth
             - key agreement
-         expiry: 8760h
+         expiry: 876000h
 
 ###########################################################################
 #  Certificate Signing Request (CSR) section.
@@ -313,11 +313,11 @@ csr:
      algo: ecdsa
      size: 256
    names:
-      - C: US
-        ST: "North Carolina"
+      - C: KR
+        ST: "SEOUL"
         L:
-        O: Hyperledger
-        OU: Fabric
+        O: Delivery
+        OU: Delivery
    hosts:
      - 30bcda5ad7ed
      - localhost

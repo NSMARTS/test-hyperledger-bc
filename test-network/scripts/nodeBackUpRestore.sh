@@ -1,4 +1,7 @@
+echo 채널 블록 복구
+
 cp ../backup/orderchannel.block ./orderchannel.block
+cp ../backup/contractchannel.block ./contractchannel.block
 
 
 echo 네이버 peer0 복구

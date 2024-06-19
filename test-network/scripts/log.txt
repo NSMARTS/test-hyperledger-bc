@@ -1,1 +1,0 @@
-[31m2024-06-10 16:36:23.612 KST 0001 ERRO[0m [main] [31;1mInitCmd[0m -> Fatal error when initializing core config : error when reading core config file: Config File "core" Not Found in "[/Users/ljwoon/nsmrats_job/hyperledger-fabric-2.3/fabric-network/test-network/scripts]"

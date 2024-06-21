@@ -4,6 +4,7 @@
 # 패키징
 
 echo ---------------------- Order chaincode regist start -------------------------------------
+export FABRIC_CFG_PATH=${PWD}/../configtx
 export CC_SRC_PATH=${PWD}/../../chaincodes/orders-chaincode/
 export CC_NAME=order
 export CC_VERSION=v1
@@ -124,6 +125,7 @@ echo ---------------------- order chaincode regist end -------------------------
 # 패키징
 
 echo ---------------------- contract chaincode regist start -------------------------------------
+export FABRIC_CFG_PATH=${PWD}/../configtx
 export CC_SRC_PATH=${PWD}/../../chaincodes/contracts-chaincode/
 export CC_NAME=contract
 export CC_VERSION=v1

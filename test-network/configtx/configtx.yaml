@@ -218,10 +218,10 @@ Application: &ApplicationDefaults
       Type: ImplicitMeta
       Rule: "MAJORITY Endorsement"
     Endorsement:
-      # Type: Signature
-      # Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
-      Type: ImplicitMeta
-      Rule: "ALL Endorsement"
+      Type: Signature
+      Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
+      # Type: ImplicitMeta
+      # Rule: "ALL Endorsement"
   Capabilities:
     <<: *ApplicationCapabilities
 ################################################################################
@@ -417,5 +417,21 @@ Profiles:
       Organizations:
         - *Naver
         - *Restaurant
+      Policies:
+        Readers:
+          Type: ImplicitMeta
+          Rule: "ANY Readers"
+        Writers:
+          Type: ImplicitMeta
+          Rule: "ANY Writers"
+        Admins:
+          Type: ImplicitMeta
+          Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+          Type: ImplicitMeta
+          Rule: "MAJORITY Endorsement"
+        Endorsement:
+          Type: Signature
+          Rule: "AND('NaverMSP.peer','RestaurantMSP.peer','NaverMSP.peer','RestaurantMSP.peer')"
       Capabilities:
         <<: *ApplicationCapabilities

@@ -1,1 +1,0 @@
-[31m2024-06-05 14:50:38.781 KST [main] InitCmd -> ERRO 001[0m Fatal error when initializing core config : error when reading core config file: Config File "core" Not Found in "[/home/nsmarts/job/test-hyperledger-bc/test-network/scripts]"

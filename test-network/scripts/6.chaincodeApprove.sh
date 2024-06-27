@@ -8,7 +8,7 @@ export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/../organizations/peerOrganizations/nav
 export CC_NAME=order
 export CC_VERSION=v1
 # 패키지 아이디는 매번 변경된다.
-export PACKAGE_ID=order_v1:180aa0ff62d4fc303885051ab2225b314084bed612f5a7c37de66bfbed6cdb19
+export PACKAGE_ID=order_v1:851617b59b69852f52613bdbc49c169ceea8ccae8d0ab02906fc9f9bb0ba39a3
 
 ../../bin/peer lifecycle chaincode approveformyorg  --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/naver.com/peers/peer0.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/naver.com/peers/peer1.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  -o localhost:7050 --tls --cafile $ORDERER_CA --channelID orderchannel --name $CC_NAME --version $CC_VERSION --init-required --sequence 1 --waitForEvent --package-id $PACKAGE_ID
 
@@ -25,7 +25,7 @@ export CORE_PEER_ADDRESS=localhost:11051
 export CC_NAME=order
 export CC_VERSION=v1
 # 패키지 아이디는 매번 변경된다.
-export PACKAGE_ID=order_v1:180aa0ff62d4fc303885051ab2225b314084bed612f5a7c37de66bfbed6cdb19
+export PACKAGE_ID=order_v1:851617b59b69852f52613bdbc49c169ceea8ccae8d0ab02906fc9f9bb0ba39a3
 
 ../../bin/peer lifecycle chaincode approveformyorg  --peerAddresses localhost:11051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/delivery.com/peers/peer0.delivery.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  --peerAddresses localhost:13051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/delivery.com/peers/peer1.delivery.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  -o localhost:7050 --tls --cafile $ORDERER_CA --channelID orderchannel --name $CC_NAME --version $CC_VERSION --init-required --sequence 1 --waitForEvent --package-id $PACKAGE_ID
 
@@ -47,7 +47,7 @@ export CORE_PEER_ADDRESS=localhost:15051
 export CC_NAME=order
 export CC_VERSION=v1
 # 패키지 아이디는 매번 변경된다.
-export PACKAGE_ID=order_v1:180aa0ff62d4fc303885051ab2225b314084bed612f5a7c37de66bfbed6cdb19
+export PACKAGE_ID=order_v1:851617b59b69852f52613bdbc49c169ceea8ccae8d0ab02906fc9f9bb0ba39a3
 
 ../../bin/peer lifecycle chaincode approveformyorg  --peerAddresses localhost:15051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/restaurant.com/peers/peer0.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  --peerAddresses localhost:17051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/restaurant.com/peers/peer1.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  -o localhost:7050 --tls --cafile $ORDERER_CA --channelID orderchannel --name $CC_NAME --version $CC_VERSION --init-required --sequence 1 --waitForEvent --package-id $PACKAGE_ID
 
@@ -90,7 +90,7 @@ export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/../organizations/peerOrganizations/nav
 export CC_NAME=contract
 export CC_VERSION=v1
 # 패키지 아이디는 매번 변경된다.
-export PACKAGE_ID=contract_v1:15715ad07ab287a4540b307b805700b2c16a4b02baad02a404b8e285b0723d9f
+export PACKAGE_ID=contract_v1:56fe299bf682e1b548b8798151e1658437df6dfa2151dffc4f7911103fe82eff
 
 ../../bin/peer lifecycle chaincode approveformyorg  --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/naver.com/peers/peer0.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/naver.com/peers/peer1.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  -o localhost:7050 --tls --cafile $ORDERER_CA --channelID contractchannel --name $CC_NAME --version $CC_VERSION --init-required --sequence 1 --waitForEvent --package-id $PACKAGE_ID
 
@@ -110,7 +110,7 @@ export CORE_PEER_ADDRESS=localhost:15051
 export CC_NAME=contract
 export CC_VERSION=v1
 # 패키지 아이디는 매번 변경된다.
-export PACKAGE_ID=contract_v1:15715ad07ab287a4540b307b805700b2c16a4b02baad02a404b8e285b0723d9f
+export PACKAGE_ID=contract_v1:56fe299bf682e1b548b8798151e1658437df6dfa2151dffc4f7911103fe82eff
 
 ../../bin/peer lifecycle chaincode approveformyorg  --peerAddresses localhost:15051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/restaurant.com/peers/peer0.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  --peerAddresses localhost:17051 --tlsRootCertFiles ${PWD}/../organizations/peerOrganizations/restaurant.com/peers/peer1.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem  -o localhost:7050 --tls --cafile $ORDERER_CA --channelID contractchannel --name $CC_NAME --version $CC_VERSION --init-required --sequence 1 --waitForEvent --package-id $PACKAGE_ID
 

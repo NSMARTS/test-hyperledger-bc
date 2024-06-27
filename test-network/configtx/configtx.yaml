@@ -219,7 +219,8 @@ Application: &ApplicationDefaults
       Rule: "MAJORITY Endorsement"
     Endorsement:
       Type: Signature
-      Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
+      Rule: "AND('NaverMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
+      # Rule: "AND('NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer','NaverMSP.peer','DeliveryMSP.peer','RestaurantMSP.peer')"
       # Type: ImplicitMeta
       # Rule: "ALL Endorsement"
   Capabilities:
@@ -432,6 +433,8 @@ Profiles:
           Rule: "MAJORITY Endorsement"
         Endorsement:
           Type: Signature
-          Rule: "AND('NaverMSP.peer','RestaurantMSP.peer','NaverMSP.peer','RestaurantMSP.peer')"
+          Rule: "AND('NaverMSP.peer','NaverMSP.peer','RestaurantMSP.peer')"
+          # Rule: "AND('NaverMSP.peer','RestaurantMSP.peer','NaverMSP.peer','RestaurantMSP.peer')"
+
       Capabilities:
         <<: *ApplicationCapabilities

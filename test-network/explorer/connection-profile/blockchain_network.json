@@ -1,136 +1,142 @@
 {
-	"name": "test-blockchain-network",
-	"version": "1.0.0",
-	"client": {
-		"tlsEnable": true,
-		"caCredential": {
-			"id": "admin",
-			"password": "adminpw"
-		},
-		"adminCredential": {
-			"id": "admin",
-			"password": "adminpw"
-		},
-		"enableAuthentication": true,
-		"organization": "NaverMSP",
-		"connection": {
-			"timeout": {
-				"peer": {
-					"endorser": "300"
-				},
-				"orderer": "300"
-			}
-		}
-	},
-	"channels": {
-        "orderchannel": {
-            "peers": {
-                "peer0.naver.com": {},
-                "peer1.naver.com": {},
-                "peer0.delivery.com": {},
-                "peer1.delivery.com": {},
-                "peer0.restaurant.com": {},
-                "peer1.restaurant.com": {}
-            }
-        },
-        "contractchannel": {
-            "peers": {
-                "peer0.naver.com": {},
-                "peer1.naver.com": {},
-                "peer0.restaurant.com": {},
-                "peer1.restaurant.com": {}
-            }
-        }
+  "name": "test-blockchain-network",
+  "version": "1.0.0",
+  "client": {
+    "tlsEnable": true,
+    "caCredential": {
+      "id": "admin",
+      "password": "adminpw"
     },
-	"organizations": {
-		"NaverMSP": {
-			"mspid": "NaverMSP",
-			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/naver.com/admin/msp/keystore/5d7756222a1d78f5cd083b3c749a119a9d60fa572fce19f62276196b48b2f334_sk"
-			},
-			"peers": ["peer0.naver.com","peer1.naver.com"],
-			"signedCert": {
-				"path": "/tmp/crypto/peerOrganizations/naver.com/admin/msp/signcerts/cert.pem"
-			}
-		},
+    "adminCredential": {
+      "id": "admin",
+      "password": "adminpw"
+    },
+    "enableAuthentication": true,
+    "organization": "NaverMSP",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        },
+        "orderer": "300"
+      }
+    }
+  },
+  "channels": {
+    "orderchannel": {
+      "peers": {
+        "peer0.naver.com": {},
+        "peer1.naver.com": {},
+        "peer0.delivery.com": {},
+        "peer1.delivery.com": {},
+        "peer0.restaurant.com": {},
+        "peer1.restaurant.com": {}
+      }
+    },
+    "contractchannel": {
+      "peers": {
+        "peer0.naver.com": {},
+        "peer1.naver.com": {},
+        "peer0.restaurant.com": {},
+        "peer1.restaurant.com": {}
+      }
+    }
+  },
+  "organizations": {
+    "NaverMSP": {
+      "mspid": "NaverMSP",
+      "adminPrivateKey": {
+        "path": "/tmp/crypto/peerOrganizations/navermsp.com/admin/msp/keystore/2bde6476ac1ce8043db07c74c57887a3f13a669c7095bb13b5f5cd59c457a88b_sk"
+      },
+      "peers": [
+        "peer0.naver.com",
+        "peer1.naver.com"
+      ],
+      "signedCert": {
+        "path": "/tmp/crypto/peerOrganizations/naver.com/admin/msp/signcerts/cert.pem"
+      }
+    },
     "DeliveryMSP": {
-			"mspid": "DeliveryMSP",
-			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/delivery.com/admin/msp/keystore/900283fb810f809610e8715b6807a0be6dce75718ea0637f4d55a894476730b5_sk"
-			},
-			"peers": ["peer0.delivery.com","peer1.delivery.com"],
-			"signedCert": {
-				"path": "/tmp/crypto/peerOrganizations/delivery.com/admin/msp/signcerts/cert.pem"
-			}
+      "mspid": "DeliveryMSP",
+      "adminPrivateKey": {
+        "path": "/tmp/crypto/peerOrganizations/deliverymsp.com/admin/msp/keystore/adfc822e1bc2c752d6daf768ef6b8badcbac390be1b5c4e04213f1d13d5c275b_sk"
+      },
+      "peers": [
+        "peer0.delivery.com",
+        "peer1.delivery.com"
+      ],
+      "signedCert": {
+        "path": "/tmp/crypto/peerOrganizations/delivery.com/admin/msp/signcerts/cert.pem"
+      }
     },
     "RestaurantMSP": {
-			"mspid": "RestaurantMSP",
-			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/restaurant.com/admin/msp/keystore/26fbf0b4b54f273a00b083c82e2820dbfc4ee69b7471ec747112ac2be64da19f_sk"
-			},
-			"peers": ["peer0.restaurant.com","peer1.restaurant.com"],
-			"signedCert": {
-				"path": "/tmp/crypto/peerOrganizations/restaurant.com/admin/msp/signcerts/cert.pem"
-			}		
+      "mspid": "RestaurantMSP",
+      "adminPrivateKey": {
+        "path": "/tmp/crypto/peerOrganizations/restaurantmsp.com/admin/msp/keystore/7a22d62f80176521b3e95f32791cb4ec927f364e9a8fb7108672f02bf40e6efa_sk"
+      },
+      "peers": [
+        "peer0.restaurant.com",
+        "peer1.restaurant.com"
+      ],
+      "signedCert": {
+        "path": "/tmp/crypto/peerOrganizations/restaurant.com/admin/msp/signcerts/cert.pem"
+      }
     }
-	},
-	"peers": {
-		"peer0.naver.com": {
-			"tlsCACerts": {
-				"path": "/tmp/crypto/peerOrganizations/naver.com/peers/peer0.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
-			},
-			"url": "grpcs://peer0.naver.com:7051",
+  },
+  "peers": {
+    "peer0.naver.com": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/naver.com/peers/peer0.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
+      },
+      "url": "grpcs://peer0.naver.com:7051",
       "grpcOptions": {
         "ssl-target-name-override": "peer0.naver.com"
       }
-		},
-		"peer1.naver.com": {
-            "tlsCACerts": {
-                "path": "/tmp/crypto/peerOrganizations/naver.com/peers/peer1.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
-            },
-            "url": "grpcs://peer1.naver.com:9051",
-            "grpcOptions": {
-              "ssl-target-name-override": "peer1.naver.com"
-          }
-
-        },
-        "peer0.delivery.com": {
-          "tlsCACerts": {
-            "path": "/tmp/crypto/peerOrganizations/delivery.com/peers/peer0.delivery.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
-          },
-          "url": "grpcs://peer0.delivery.com:11051",
-          "grpcOptions": {
-            "ssl-target-name-override": "peer0.delivery.com"
-          }
-        },
-        "peer1.delivery.com": {
-                "tlsCACerts": {
-                    "path": "/tmp/crypto/peerOrganizations/delivery.com/peers/peer1.delivery.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
-                },
-                "url": "grpcs://peer1.delivery.com:13051",
-                "grpcOptions": {
-                  "ssl-target-name-override": "peer1.delivery.com"
-              }
-    
-            },
-            "peer0.restaurant.com": {
-              "tlsCACerts": {
-                "path": "/tmp/crypto/peerOrganizations/restaurant.com/peers/peer0.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
-              },
-              "url": "grpcs://peer0.restaurant.com:15051",
-              "grpcOptions": {
-                "ssl-target-name-override": "peer0.restaurant.com"
-              }
-            },
-            "peer1.restaurant.com": {
-                    "tlsCACerts": {
-                        "path": "/tmp/crypto/peerOrganizations/restaurant.com/peers/peer1.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
-                    },
-                    "url": "grpcs://peer1.restaurant.com:17051",
-                    "grpcOptions": {
-                      "ssl-target-name-override": "peer1.restaurant.com"
-                  }
-        
-                }
-	}
+    },
+    "peer1.naver.com": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/naver.com/peers/peer1.naver.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
+      },
+      "url": "grpcs://peer1.naver.com:9051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer1.naver.com"
+      }
+    },
+    "peer0.delivery.com": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/delivery.com/peers/peer0.delivery.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
+      },
+      "url": "grpcs://peer0.delivery.com:11051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.delivery.com"
+      }
+    },
+    "peer1.delivery.com": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/delivery.com/peers/peer1.delivery.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
+      },
+      "url": "grpcs://peer1.delivery.com:13051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer1.delivery.com"
+      }
+    },
+    "peer0.restaurant.com": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/restaurant.com/peers/peer0.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
+      },
+      "url": "grpcs://peer0.restaurant.com:15051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.restaurant.com"
+      }
+    },
+    "peer1.restaurant.com": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/restaurant.com/peers/peer1.restaurant.com/tls-msp/tlscacerts/tls-0-0-0-0-5054.pem"
+      },
+      "url": "grpcs://peer1.restaurant.com:17051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer1.restaurant.com"
+      }
+    }
+  }
 }

@@ -11,7 +11,7 @@
 CERT_DIR1="../backup"
 
 # AWS S3 버킷 이름 설정
-S3_BUCKET="hyperledger-fabric-certification-example"
+S3_BUCKET="hyperledger-fabric-certification-example-jmh"
 
 # 디렉토리 구조를 S3에 그대로 유지하면서 인증서 파일을 S3로 업로드
 find "$CERT_DIR1" -type f | while read -r file; do

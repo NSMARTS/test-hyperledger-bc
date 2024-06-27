@@ -8,7 +8,7 @@
 
 # 로컬에 저장할 디렉토리 설정
 
-S3_BUCKET="hyperledger-fabric-certification-example"
+S3_BUCKET="hyperledger-fabric-certification-example-jmh"
 
 # 버킷 중 backup 삭제
 

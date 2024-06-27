@@ -62,15 +62,15 @@ RM_CRYPTO_FILES="
 
 # 파일 및 디렉터리 삭제
 for file in $RM_CA_FILES; do
-    rm -rf ./organizations/fabric-ca/naver/$file
-    rm -rf ./organizations/fabric-ca/delivery/$file
-    rm -rf ./organizations/fabric-ca/restaurant/$file
-    rm -rf ./organizations/fabric-ca/tls-ca/$file
+    sudo rm -rf ./organizations/fabric-ca/naver/$file
+    sudo rm -rf ./organizations/fabric-ca/delivery/$file
+    sudo rm -rf ./organizations/fabric-ca/restaurant/$file
+    sudo rm -rf ./organizations/fabric-ca/tls-ca/$file
 done
 
 for file in $RM_CRYPTO_FILES; do
-    rm -rf ./organizations/peerOrganizations/naver.com/$file
-    rm -rf ./organizations/peerOrganizations/delivery.com/$file
-    rm -rf ./organizations/peerOrganizations/restaurant.com/$file
-    rm -rf ./organizations/tls-ca/$file
+    sudo rm -rf ./organizations/peerOrganizations/naver.com/$file
+    sudo rm -rf ./organizations/peerOrganizations/delivery.com/$file
+    sudo rm -rf ./organizations/peerOrganizations/restaurant.com/$file
+    sudo rm -rf ./organizations/tls-ca/$file
 done

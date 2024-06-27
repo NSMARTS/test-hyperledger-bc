@@ -11,7 +11,7 @@
 LOCAL_DIR="../organizations"
 
 # AWS S3 버킷 이름 설정
-S3_BUCKET="hyperledger-fabric-certification-example"
+S3_BUCKET="hyperledger-fabric-certification-example-jmh"
 
 # S3 버킷의 내용을 로컬 디렉토리로 동기화
 aws s3 sync s3://$S3_BUCKET/organizations $LOCAL_DIR

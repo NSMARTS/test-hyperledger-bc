@@ -51,5 +51,5 @@ docker run --rm --volumes-from peer1.restaurant.com -v $(pwd)/../backup:/backup 
 docker run --rm --volumes-from couchdb5 -v $(pwd)/../backup:/backup busybox tar cvf /backup/couchdb5-backup.tar -C /opt/couchdb/data .
 
 echo 채널에 필요한 블록 복제
-cp ./orderchannel.block ../backup/orderchannel.block
+sudo cp ./orderchannel.block ../backup/orderchannel.block
 cp ./contractchannel.block ../backup/contractchannel.block

@@ -5,7 +5,7 @@
 # aws configure 를 입력. 사용자 정보 등록
 
 # 인증서 파일이 위치한 디렉토리 설정
-S3_BUCKET="hyperledger-fabric-certification-example"
+S3_BUCKET="hyperledger-fabric-certification-example-jmh"
 
 # S3 버킷에서 ../organizations 경로의 모든 파일 제거
 aws s3 rm "s3://$S3_BUCKET/organizations/" --recursive

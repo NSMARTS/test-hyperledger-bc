@@ -1,6 +1,6 @@
 echo 채널 블록 복구
 
-cp ../backup/orderchannel.block ./orderchannel.block
+sudo cp ../backup/orderchannel.block ./orderchannel.block
 cp ../backup/contractchannel.block ./contractchannel.block
 
 

@@ -125,9 +125,13 @@ echo ---------------------- order chaincode regist end -------------------------
 # 패키징
 
 echo ---------------------- contract chaincode regist start -------------------------------------
+export FABRIC_CFG_PATH=${PWD}/../configtx
 export CC_SRC_PATH=${PWD}/../../chaincodes/contracts-chaincode/
 export CC_NAME=contract
 export CC_VERSION=v1
+mkdir ../packagedChaincode
+chmod -R 755 ../packagedChaincode
+
 ../../bin/peer lifecycle chaincode package ../packagedChaincode/${CC_NAME}_${CC_VERSION}.tar.gz --path ${CC_SRC_PATH} --lang node --label ${CC_NAME}_${CC_VERSION} >&log.txt
 
 # 체인코드 naver peer0 인스톨

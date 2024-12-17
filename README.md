@@ -79,10 +79,57 @@ curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.3
 ```
 
 -   네트워크 실행
+    하이퍼레저 네트워크를 실행시키기 위해 test-network/tls-ca/script
+    경로로 이동. 이곳에선 ca와 관련된 스크립트가 존재
+
+1.caScriptStart.sh 는 CA 노드를 실행시키는 스크립트.
+
+CA는 peer, orderer, couchDB, admin, client 인증서를 발급하는 역할을 하는 노드
+
+2.registerEnroll.sh 은 CA노드가 인증서를 발급하는 스크립트
+
+3.networkUp.sh 은 나머지 블록체인 네트워크 노드를 실행시키는 스크립트
+
+caServerDown.sh 은 CA노드를 종료시키는 코드
+
+delivery-config.yaml restaurant-config.yaml naver-config.yaml은 인증서 관련 설정 파일
 
 ```bash
 # ca 노드 실행
 ./1.caScriptStart.sh
 # 실행된 노드 목록 조회
 docker ps -a
+```
+
+```bash
+# 인증서 발급
+./2.registerEnroll.sh
+# 하이퍼레저 패브릭 나머지 노드 전체 실행
+./3.networkUp.sh
+# 실행된 노드 목록 조회
+docker ps -a
+```
+
+-   채널 가입 및 체인코드 설치
+
+```bash
+cd ../../scripts
+ls
+```
+
+```bash
+./1# aws cli 설치
+sudo apt install awscli -y
+# aws 계정 정보 등록
+aws configure
+```
+
+```bash
+./4.channelJoin.sh
+```
+
+```bash
+cd ../../chaincodes/orders-chaincode/
+npm i
+npm run build
 ```

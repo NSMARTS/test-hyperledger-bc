@@ -154,21 +154,53 @@ sudo apt install awscli -y
 aws configure
 ```
 
-s3CertificateDelete.sh은 s3 인증서 삭제 스크립트이다. s3 인증서 업로드 하기 전 미리 삭제해두고 실행하자
-s3CertificateDownload.sh은 s3 인증서 다운로드 스크립트 이다. 백업한거 다운로드가 가능하다.
-orderchannel.block 은 4번 스크립트를 실행하면 생성되는 파일이다. 채널 생성에 필요한 block 파일이니 매우 중요하다.
+` s3CertificateDelete.sh`  
+ **S3 인증서를 삭제**하는 스크립트입니다.
+
+-   **주의**: `s3CertificateUpload.sh`를 실행하기 전에 미리 **삭제해두고** 실행해야 합니다.
+
+` s3CertificateDownload.sh`  
+ **S3 인증서를 다운로드**하는 스크립트입니다.
+
+-   백업한 인증서를 **다운로드**할 수 있습니다.
+
+` orderchannel.block`  
+ **4번 스크립트**인 `channelJoin.sh`를 실행하면 생성되는 파일입니다.
+
+-   채널 생성에 필요한 **block 파일**이므로 **매우 중요**합니다.
 
 ```bash
 ./4.channelJoin.sh
 ```
 
-성공적으로 완료되면 200 이 뜬다.
-다음은 체인코드 패키징 및 설치이다.
-chaincodes/orders-chaincode 경로로 이동.
-체인코드 파일을 빌드한다.
+성공적으로 완료되면 **200**이 표시됩니다.
+
+다음은 **체인코드 패키징 및 설치** 과정입니다.
+
+1. `chaincodes/orders-chaincode` 경로로 이동합니다.
+2. 체인코드 파일을 **빌드**합니다.
 
 ```bash
 cd ../../chaincodes/orders-chaincode/
 npm i
 npm run build
+```
+
+성공적으로 빌드가 완료되면 **dist** 파일이 생성됩니다.
+
+이후, 다시 **scripts** 경로로 돌아가서 **5번 스크립트**를 실행합니다.
+
+```bash
+cd ../../test-network/scripts/
+ ./5.chaincodePackaging.sh
+```
+
+이때, 결과에 나온 **Package ID**를 복사하여 **6번 스크립트**를 수정합니다.
+
+현재 네트워크에는 **조직이 3개**가 있으므로, 각 조직에 대해 **3군데의 PACKAGE_ID**를 수정해야 합니다.
+
+**6번 스크립트**를 수정한 후 실행합니다.
+
+```bash
+./6.chaincodeApprove.sh
 ```

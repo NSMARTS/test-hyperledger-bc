@@ -80,15 +80,24 @@ curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.3
 
 -   네트워크 실행
 
-    하이퍼레저 네트워크를 실행시키기 위해 test-network/tls-ca/script
-    경로로 이동. 이곳에선 ca와 관련된 스크립트가 존재
+하이퍼레저 네트워크를 실행시키기 위해 `test-network/tls-ca/script` 경로로 이동.  
+이곳에는 CA와 관련된 스크립트가 존재합니다.
 
-1.caScriptStart.sh 는 CA 노드를 실행시키는 스크립트.
-CA는 peer, orderer, couchDB, admin, client 인증서를 발급하는 역할을 하는 노드
-2.registerEnroll.sh 은 CA노드가 인증서를 발급하는 스크립트
-3.networkUp.sh 은 나머지 블록체인 네트워크 노드를 실행시키는 스크립트
-caServerDown.sh 은 CA노드를 종료시키는 코드
-delivery-config.yaml restaurant-config.yaml naver-config.yaml은 인증서 관련 설정 파일
+1. `caScriptStart.sh`  
+   CA 노드를 실행시키는 스크립트.  
+   CA는 **peer, orderer, couchDB, admin, client 인증서**를 발급하는 역할을 하는 노드입니다.
+
+2. `registerEnroll.sh`  
+   CA 노드가 **인증서를 발급**하는 스크립트.
+
+3. `networkUp.sh`  
+   나머지 **블록체인 네트워크 노드**를 실행시키는 스크립트.
+
+`caServerDown.sh`  
+ **CA 노드를 종료**시키는 스크립트.
+
+`delivery-config.yaml`, `restaurant-config.yaml`, `naver-config.yaml`  
+ **인증서 관련 설정 파일**입니다.
 
 ```bash
 # ca 노드 실행
@@ -113,13 +122,30 @@ cd ../../scripts
 ls
 ```
 
-4.channelJoin.sh은 채널 생성에 필요한 block 파일을 생성 및 참가하는 코드 이다.
-해당 코드 안에는 블록을 생성하는 명령어가 존재한다.
-이 코드의 flag를 보면 -configPath ${PWD}/../configtx 가 있는데
-configtx.yaml 이 코드에서 채널과 조직 설정 파일이다.
-5.chaincodePackaging.sh은 체인코드를 패키징 후 설치하는 스크립트이다. 5번 스크립트를 실행하기전 반드시 체인코드 경로로가 체인코드를 빌드해야한다.
-6.chaincodeApprove.sh은 체인코드 승인 스크립트 이다. 6번을 실행하기전 반드시 5번 스크립트 실행 후 나온 ID를 복사 후 PACKAGE_ID 환경변수를 변경 해야한다.
-7.s3CertificateUpload.sh은 s3에 인증서를 업로드하는 코드이다. 인증서 발급한 데이터를 백업하는 것 이다. 만약 백업을 하지 않고 종료를 해버리면 인증서가 다 먹통된다. 7번 스크립트는 그냥 awscli를 사용함으로 aws cli를 설치해야한다.
+4. `channelJoin.sh`  
+   채널 생성에 필요한 **block 파일을 생성 및 참가**하는 스크립트입니다.  
+   해당 코드 안에는 블록을 생성하는 명령어가 존재합니다.
+
+    - 이 코드의 **flag** 중 하나인 `-configPath ${PWD}/../configtx`는  
+      `configtx.yaml` 파일을 참조합니다.  
+      이 파일은 **채널과 조직 설정**을 정의하는 파일입니다.
+
+5. `chaincodePackaging.sh`  
+   체인코드를 **패키징 후 설치**하는 스크립트입니다.
+
+    - **주의**: 이 스크립트를 실행하기 전 반드시 **체인코드 경로로 이동**해서 체인코드를 **빌드**해야 합니다.
+
+6. `chaincodeApprove.sh`  
+   체인코드를 **승인**하는 스크립트입니다.
+
+    - **주의**: 5번 스크립트를 실행한 후 **나온 ID를 복사**해서  
+      `PACKAGE_ID` 환경변수를 설정해야 합니다.
+
+7. `s3CertificateUpload.sh`  
+   **S3에 인증서를 업로드**하는 스크립트입니다.
+    - 인증서 발급 데이터를 **백업**하는 용도입니다.
+    - **주의**: 백업을 하지 않고 종료하면 인증서가 모두 **먹통**될 수 있습니다.
+    - 이 스크립트는 **AWS CLI**를 사용하므로, 사전에 **AWS CLI를 설치**해야 합니다.
 
 ```bash
 ./1# aws cli 설치

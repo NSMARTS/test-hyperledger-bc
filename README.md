@@ -63,144 +63,105 @@ License, Version 2.0 (Apache-2.0), located in the [LICENSE](LICENSE) file.
 Hyperledger Project documentation files are made available under the Creative
 Commons Attribution 4.0 International License (CC-BY-4.0), available at http://creativecommons.org/licenses/by/4.0/.
 
-## 블록체인 실행 방법
+# 하이퍼레저 패브릭 블록체인 네트워크 실행 가이드
 
--   깃설정
+## 사전 준비 단계
+
+### Git 설정
 
 ```bash
 git config --global core.autocrlf false
 git config --global core.longpaths true
 ```
 
--   하이퍼레저 패브릭 바이너리 파일 및 도커 이미지 다운
+### 하이퍼레저 패브릭 바이너리 및 도커 이미지 다운로드
 
 ```bash
 curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.3
 ```
 
--   네트워크 실행
+## 네트워크 실행 절차
 
-하이퍼레저 네트워크를 실행시키기 위해 `test-network/tls-ca/script` 경로로 이동.  
-이곳에는 CA와 관련된 스크립트가 존재합니다.
+### 1. CA 노드 실행
 
-1. `caScriptStart.sh`  
-   CA 노드를 실행시키는 스크립트.  
-   CA는 **peer, orderer, couchDB, admin, client 인증서**를 발급하는 역할을 하는 노드입니다.
-
-2. `registerEnroll.sh`  
-   CA 노드가 **인증서를 발급**하는 스크립트.
-
-3. `networkUp.sh`  
-   나머지 **블록체인 네트워크 노드**를 실행시키는 스크립트.
-
-`caServerDown.sh`  
- **CA 노드를 종료**시키는 스크립트.
-
-`delivery-config.yaml`, `restaurant-config.yaml`, `naver-config.yaml`  
- **인증서 관련 설정 파일**입니다.
+`test-network/tls-ca/script` 디렉토리로 이동
 
 ```bash
-# ca 노드 실행
+# CA 노드 실행
 ./1.caScriptStart.sh
-# 실행된 노드 목록 조회
+
+# 실행된 노드 확인
 docker ps -a
 ```
+
+### 2. 인증서 발급 및 네트워크 구동
 
 ```bash
 # 인증서 발급
 ./2.registerEnroll.sh
-# 하이퍼레저 패브릭 나머지 노드 전체 실행
+
+# 블록체인 네트워크 노드 전체 실행
 ./3.networkUp.sh
-# 실행된 노드 목록 조회
+
+# 실행된 노드 확인
 docker ps -a
 ```
 
--   채널 가입 및 체인코드 설치
+### 3. 채널 생성 및 체인코드 설치
 
-```bash
-cd ../../scripts
-ls
-```
+`scripts` 디렉토리로 이동
 
-4. `channelJoin.sh`  
-   채널 생성에 필요한 **block 파일을 생성 및 참가**하는 스크립트입니다.  
-   해당 코드 안에는 블록을 생성하는 명령어가 존재합니다.
-
-    - 이 코드의 **flag** 중 하나인 `-configPath ${PWD}/../configtx`는  
-      `configtx.yaml` 파일을 참조합니다.  
-      이 파일은 **채널과 조직 설정**을 정의하는 파일입니다.
-
-5. `chaincodePackaging.sh`  
-   체인코드를 **패키징 후 설치**하는 스크립트입니다.
-
-    - **주의**: 이 스크립트를 실행하기 전 반드시 **체인코드 경로로 이동**해서 체인코드를 **빌드**해야 합니다.
-
-6. `chaincodeApprove.sh`  
-   체인코드를 **승인**하는 스크립트입니다.
-
-    - **주의**: 5번 스크립트를 실행한 후 **나온 ID를 복사**해서  
-      `PACKAGE_ID` 환경변수를 설정해야 합니다.
-
-7. `s3CertificateUpload.sh`  
-   **S3에 인증서를 업로드**하는 스크립트입니다.
-    - 인증서 발급 데이터를 **백업**하는 용도입니다.
-    - **주의**: 백업을 하지 않고 종료하면 인증서가 모두 **먹통**될 수 있습니다.
-    - 이 스크립트는 **AWS CLI**를 사용하므로, 사전에 **AWS CLI를 설치**해야 합니다.
-
-```bash
-./1# aws cli 설치
-sudo apt install awscli -y
-# aws 계정 정보 등록
-aws configure
-```
-
-` s3CertificateDelete.sh`  
- **S3 인증서를 삭제**하는 스크립트입니다.
-
--   **주의**: `s3CertificateUpload.sh`를 실행하기 전에 미리 **삭제해두고** 실행해야 합니다.
-
-` s3CertificateDownload.sh`  
- **S3 인증서를 다운로드**하는 스크립트입니다.
-
--   백업한 인증서를 **다운로드**할 수 있습니다.
-
-` orderchannel.block`  
- **4번 스크립트**인 `channelJoin.sh`를 실행하면 생성되는 파일입니다.
-
--   채널 생성에 필요한 **block 파일**이므로 **매우 중요**합니다.
+#### 채널 생성
 
 ```bash
 ./4.channelJoin.sh
+# 성공 시 200 응답
 ```
 
-성공적으로 완료되면 **200**이 표시됩니다.
-
-다음은 **체인코드 패키징 및 설치** 과정입니다.
-
-1. `chaincodes/orders-chaincode` 경로로 이동합니다.
-2. 체인코드 파일을 **빌드**합니다.
+#### 체인코드 패키징 및 설치
 
 ```bash
-cd ../../chaincodes/orders-chaincode/
+# 체인코드 디렉토리로 이동
+cd ../chaincodes/orders-chaincode/
+
+# 종속성 설치 및 빌드
 npm i
 npm run build
-```
 
-성공적으로 빌드가 완료되면 **dist** 파일이 생성됩니다.
-
-이후, 다시 **scripts** 경로로 돌아가서 **5번 스크립트**를 실행합니다.
-
-```bash
+# scripts 디렉토리로 복귀
 cd ../../test-network/scripts/
- ./5.chaincodePackaging.sh
-```
 
-이때, 결과에 나온 **Package ID**를 복사하여 **6번 스크립트**를 수정합니다.
+# 체인코드 패키징
+./5.chaincodePackaging.sh
 
-현재 네트워크에는 **조직이 3개**가 있으므로, 각 조직에 대해 **3군데의 PACKAGE_ID**를 수정해야 합니다.
-
-**6번 스크립트**를 수정한 후 실행합니다.
-
-```bash
+# 체인코드 승인 (Package ID 수정 필요)
 ./6.chaincodeApprove.sh
 ```
+
+## 추가 설정
+
+### 웹 서버 연결 프로파일 수정
+
+`utils/connection-profile/connection.json` 파일 수정 사항:
+
+-   `NaverMSP`, `DeliveryMSP`, `RestaurantMSP`의 `adminPrivateKey` 경로 업데이트
+-   경로: `peerOrganizations/ooo.com/admin/msp/keystore`
+-   `../fabric-network` → `../test-hyperledger-bc` 로 경로 변경
+
+## 기타 스크립트
+
+### 인증서 관리
+
+-   `s3CertificateUpload.sh`: S3에 인증서 백업
+-   `s3CertificateDelete.sh`: S3 인증서 삭제
+-   `s3CertificateDownload.sh`: S3에서 인증서 다운로드
+
+### 네트워크 중단
+
+-   `caServerDown.sh`: CA 노드 종료
+
+## 주의사항
+
+-   인증서 백업을 반드시 수행하세요
+-   각 스크립트 실행 시 순서와 경로에 주의하세요
+-   AWS CLI 사전 설치 필요 (`sudo apt install awscli -y`)

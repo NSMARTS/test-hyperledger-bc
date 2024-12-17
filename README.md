@@ -79,19 +79,15 @@ curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.3
 ```
 
 -   네트워크 실행
+
     하이퍼레저 네트워크를 실행시키기 위해 test-network/tls-ca/script
     경로로 이동. 이곳에선 ca와 관련된 스크립트가 존재
 
 1.caScriptStart.sh 는 CA 노드를 실행시키는 스크립트.
-
 CA는 peer, orderer, couchDB, admin, client 인증서를 발급하는 역할을 하는 노드
-
 2.registerEnroll.sh 은 CA노드가 인증서를 발급하는 스크립트
-
 3.networkUp.sh 은 나머지 블록체인 네트워크 노드를 실행시키는 스크립트
-
 caServerDown.sh 은 CA노드를 종료시키는 코드
-
 delivery-config.yaml restaurant-config.yaml naver-config.yaml은 인증서 관련 설정 파일
 
 ```bash
@@ -117,6 +113,14 @@ cd ../../scripts
 ls
 ```
 
+4.channelJoin.sh은 채널 생성에 필요한 block 파일을 생성 및 참가하는 코드 이다.
+해당 코드 안에는 블록을 생성하는 명령어가 존재한다.
+이 코드의 flag를 보면 -configPath ${PWD}/../configtx 가 있는데
+configtx.yaml 이 코드에서 채널과 조직 설정 파일이다.
+5.chaincodePackaging.sh은 체인코드를 패키징 후 설치하는 스크립트이다. 5번 스크립트를 실행하기전 반드시 체인코드 경로로가 체인코드를 빌드해야한다.
+6.chaincodeApprove.sh은 체인코드 승인 스크립트 이다. 6번을 실행하기전 반드시 5번 스크립트 실행 후 나온 ID를 복사 후 PACKAGE_ID 환경변수를 변경 해야한다.
+7.s3CertificateUpload.sh은 s3에 인증서를 업로드하는 코드이다. 인증서 발급한 데이터를 백업하는 것 이다. 만약 백업을 하지 않고 종료를 해버리면 인증서가 다 먹통된다. 7번 스크립트는 그냥 awscli를 사용함으로 aws cli를 설치해야한다.
+
 ```bash
 ./1# aws cli 설치
 sudo apt install awscli -y
@@ -124,9 +128,18 @@ sudo apt install awscli -y
 aws configure
 ```
 
+s3CertificateDelete.sh은 s3 인증서 삭제 스크립트이다. s3 인증서 업로드 하기 전 미리 삭제해두고 실행하자
+s3CertificateDownload.sh은 s3 인증서 다운로드 스크립트 이다. 백업한거 다운로드가 가능하다.
+orderchannel.block 은 4번 스크립트를 실행하면 생성되는 파일이다. 채널 생성에 필요한 block 파일이니 매우 중요하다.
+
 ```bash
 ./4.channelJoin.sh
 ```
+
+성공적으로 완료되면 200 이 뜬다.
+다음은 체인코드 패키징 및 설치이다.
+chaincodes/orders-chaincode 경로로 이동.
+체인코드 파일을 빌드한다.
 
 ```bash
 cd ../../chaincodes/orders-chaincode/
